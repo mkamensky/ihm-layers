@@ -45,15 +45,24 @@ EOF
           "Maximum response size in bytes [#{@maxsize}]") do |m|
     @maxsize = m
   end
+  opts.on('-o', '--outdir STRING', String,
+          "Output subdirectory in layers") do |o|
+    @outdir = o
+  end
 end.parse!
 
-require 'faraday'
+unless (@outdir) do
+  parts = @query.split('=').map{|s| s.delete_prefix('"').delete_suffix('"')}
+  @outdir = parts.join('/')
+end
 
 @query = <<EOF
 [timeout:#{@timeout}][maxsize:#{@maxsize}][out:json];
 #{@type}[#{@query}](area:#{@area});
-out meta geom;
+out geom;
 EOF
+
+require 'faraday'
 
 resp = Faraday.post('http://overpass-api.de/api/interpreter', @query)
 

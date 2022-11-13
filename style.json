@@ -1,0 +1,53 @@
+{
+  "version": 8,
+  "name": "Floods",
+  "metadata": {
+    "maputnik:renderer": "mbgljs",
+    "openmaptiles:version": "3.x"
+  },
+  "sources": {
+    "floodpoints": {
+      "type": "geojson",
+      "data": "https://raw.githack.com/HarelM/IHMMapboxMapExample/main/source.geojson"
+    }
+  },
+  "sprite": "",
+  "glyphs": "https://israelhikingmap.osm.org.il/fonts/{fontstack}/{range}.pbf",
+  "layers": [
+    {
+      "id": "bg",
+      "type": "background",
+      "metadata": {"IHM:overlay": false},
+      "paint": {"background-color": "blue"}
+    },
+    {
+      "id": "water-area-name",
+      "type": "symbol",
+      "source": "floodpoints",
+      "layout": {
+        "text-field": ["get", "text"],
+        "symbol-placement": "point",
+        "text-font": ["Open Sans Cond Bold"],
+        "text-size": 18,
+        "text-letter-spacing": 0.3,
+        "text-max-width": 5,
+        "text-offset": [0, 3]
+      },
+      "paint": {
+        "text-color": "blue",
+        "text-halo-color": "white",
+        "text-halo-width": 1.5,
+        "text-halo-blur": 1
+      }
+    },
+    {
+      "id": "water-area-icon",
+      "type": "symbol",
+      "source": "floodpoints",
+      "layout": {
+        "icon-image": "https://avatars.githubusercontent.com/u/13288969?s=64&v=4"
+      }
+    }
+  ],
+  "id": "floods"
+}
